@@ -42,11 +42,7 @@ const NavItem = styled(Link)`
 `;
 
 const Navbar = () => {
-	const { setAndGetTokens } = useAuth();
-	const handleLogout = () => {
-		setAndGetTokens();
-		localStorage.clear();
-	};
+	const handleLogout = () => {};
 	return (
 		<NavWrapper>
 			<NavContainer>

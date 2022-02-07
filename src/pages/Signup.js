@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import {
 	Container,
@@ -9,10 +8,8 @@ import {
 	MainButton,
 	SecondaryButton,
 } from '../components/AccountForm';
-import { tweetAPI } from '../config/api';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAuth } from '../config/Auth';
+
 
 export const ErrorMessage = styled.p`
 	color: red;
@@ -22,7 +19,7 @@ export const ErrorMessage = styled.p`
 	text-align: center;
 `;
 const Signup = () => {
-	const {  setAndGetTokens } = useAuth();
+  
 	const [forms, setForms] = useState({
 		email: '',
 		password: '',
@@ -32,47 +29,8 @@ const Signup = () => {
 
 	const [isError, setIsError] = useState({ status: false, message: '' });
 
-	let navigate = useNavigate();
-
 	const handleSignup = async (e) => {
 		e.preventDefault();
-		// register usernya
-		try {
-			const registerResponse = await tweetAPI.post('/user/register', {
-				...forms,
-			});
-
-			// jika sukses
-			if (registerResponse.data.success) {
-				delete forms.name;
-				delete forms.handle;
-				// post data buat login
-				try {
-					const loginResponse = await tweetAPI.post('/user/login', {
-						...forms,
-					});
-					//jika sukses
-					if (loginResponse.data.success) {
-						const token = loginResponse.data.data.token;
-						setAndGetTokens(token);
-						navigate('/', { replace: true });
-						console.log(loginResponse, token, 'tokenton');
-					}
-				} catch (error) {
-					setIsError((isError) => ({
-						status: true,
-						message: 'Error while try to logged in',
-					}));
-					console.log(error, 'in login');
-				}
-			}
-		} catch (error) {
-			setIsError((isError) => ({
-				status: true,
-				message: 'Error while try to sign up',
-			}));
-			console.log(error);
-		}
 	};
 	return (
 		<Container>

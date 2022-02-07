@@ -8,40 +8,15 @@ import {
 	MainButton,
 	SecondaryButton,
 } from '../components/AccountForm';
-import { tweetAPI } from '../config/api';
 import { ErrorMessage } from './Signup';
-import { useAuth } from '../config/Auth';
-import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-
-	const { setAndGetTokens } = useAuth();
 	const [forms, setForms] = useState({ email: '', password: '' });
 	const [isError, setIsError] = useState({ status: false, message: '' });
-	const navigate = useNavigate();
 
-  
 	const handleLogin = async (e) => {
 		e.preventDefault();
-		try {
-			const loginResponse = await tweetAPI.post('/user/login', {
-				...forms,
-			});
-			//jika sukses
-			if (loginResponse.data.success) {
-				const token = loginResponse.data.data.token;
-				setAndGetTokens(token);
-				navigate('/', { replace: true });
-				console.log(loginResponse, token, 'tokenton');
-			}
-		} catch (error) {
-			setIsError((isError) => ({
-				status: true,
-				message: 'Error while try to logged in',
-			}));
-			console.log(error, 'in login');
-		}
 	};
 	return (
 		<Container>

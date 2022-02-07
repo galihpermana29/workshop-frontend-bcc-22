@@ -33,11 +33,6 @@ const UserTweetCard = ({ username, tweet, id }) => {
 	};
 	const handleDelete = async () => {
 		setAnchorEl(null);
-		try {
-			const deleteResponse = await tweetAPI.delete(`/tweet/${id}`);
-		} catch (error) {
-			console.log(error, 'while posting a tweet');
-		}
 	};
 	return (
 		<Wrapper>
