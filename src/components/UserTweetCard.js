@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
-import { tweetAPI } from '../config/api';
+
 
 const Wrapper = styled.div`
 	background-color: #fff;
@@ -34,13 +34,6 @@ const UserTweetCard = ({ username, tweet, id }) => {
 	};
 	const handleDelete = async () => {
 		setAnchorEl(null);
-		try {
-			console.log(id);
-			const deleteResponse = await tweetAPI.delete(`/tweet/${id}`);
-			//jika sukses
-		} catch (error) {
-			console.log(error, 'while deleting a tweet');
-		}
 	};
 	return (
 		<Wrapper>
