@@ -22,7 +22,7 @@ export const ErrorMessage = styled.p`
 	text-align: center;
 `;
 const Signup = () => {
-	const { authToken, setAndGetTokens } = useAuth();
+	const {  setAndGetTokens } = useAuth();
 	const [forms, setForms] = useState({
 		email: '',
 		password: '',
@@ -36,8 +36,6 @@ const Signup = () => {
 
 	const handleSignup = async (e) => {
 		e.preventDefault();
-		console.log(forms);
-
 		// register usernya
 		try {
 			const registerResponse = await tweetAPI.post('/user/register', {

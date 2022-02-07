@@ -34,17 +34,8 @@ const UserTweetCard = ({ username, tweet, id }) => {
 	const handleDelete = async () => {
 		setAnchorEl(null);
 		try {
-			console.log(id);
-			const loginResponse = await tweetAPI.delete(`/tweet/${id}`);
-			//jika sukses
-			if (loginResponse.data.success) {
-				// setForm('');
-			}
+			const deleteResponse = await tweetAPI.delete(`/tweet/${id}`);
 		} catch (error) {
-			// setIsError((isError) => ({
-			// 	status: true,
-			// 	message: 'error',
-			// }));
 			console.log(error, 'while posting a tweet');
 		}
 	};

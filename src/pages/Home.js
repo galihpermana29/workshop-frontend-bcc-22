@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import styled from 'styled-components';
 import { InputTweet, TweetArea, TweetButton } from '../components/CreateArea';
@@ -35,7 +35,7 @@ const Home = () => {
 	);
 	const handleTweet = async () => {
 		try {
-			const loginResponse = await tweetAPI.post(
+			const postResponse = await tweetAPI.post(
 				'/tweet',
 				{
 					content: form,
@@ -43,7 +43,7 @@ const Home = () => {
 				{ headers: { Authorization: `Bearer ${authToken}` } }
 			);
 			//jika sukses
-			if (loginResponse.data.success) {
+			if (postResponse.data.success) {
 				setForm('');
 			}
 		} catch (error) {
