@@ -28,6 +28,7 @@ const ITEM_HEIGHT = 48;
 const UserTweetCard = ({ username, tweet, id }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
+
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -35,17 +36,10 @@ const UserTweetCard = ({ username, tweet, id }) => {
 		setAnchorEl(null);
 		try {
 			console.log(id);
-			const loginResponse = await tweetAPI.delete(`/tweet/${id}`);
+			const deleteResponse = await tweetAPI.delete(`/tweet/${id}`);
 			//jika sukses
-			if (loginResponse.data.success) {
-				// setForm('');
-			}
 		} catch (error) {
-			// setIsError((isError) => ({
-			// 	status: true,
-			// 	message: 'error',
-			// }));
-			console.log(error, 'while posting a tweet');
+			console.log(error, 'while deleting a tweet');
 		}
 	};
 	return (

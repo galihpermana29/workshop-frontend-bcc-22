@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-// import TwitterIcon from '@material-ui/icons/Twitter';
-// import TwitterIcon from '@mui/icons-material/Twitter';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { useAuth } from '../config/Auth';
 
@@ -42,11 +40,9 @@ const NavItem = styled(Link)`
 `;
 
 const Navbar = () => {
-	const { setAndGetTokens } = useAuth();
 	const handleLogout = () => {
-		setAndGetTokens();
-		localStorage.clear();
 	};
+
 	return (
 		<NavWrapper>
 			<NavContainer>
