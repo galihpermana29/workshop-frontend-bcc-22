@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import { tweetAPI } from '../config/api';
+import { useAuth } from '../config/Auth';
 
 const Wrapper = styled.div`
 	background-color: #fff;
@@ -27,6 +28,7 @@ const ITEM_HEIGHT = 48;
 
 const UserTweetCard = ({ username, tweet, id }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
+	const { authToken, user } = useAuth();
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -34,7 +36,9 @@ const UserTweetCard = ({ username, tweet, id }) => {
 	const handleDelete = async () => {
 		setAnchorEl(null);
 		try {
-			const deleteResponse = await tweetAPI.delete(`/tweet/${id}`);
+			if (user === username) {
+				const deleteResponse = await tweetAPI.delete(`/tweet/${id}`);
+			}
 		} catch (error) {
 			console.log(error, 'while posting a tweet');
 		}
@@ -43,35 +47,37 @@ const UserTweetCard = ({ username, tweet, id }) => {
 		<Wrapper>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 				<h1 style={{ fontSize: '1.6rem' }}>{username}</h1>
-				<div>
-					<IconButton
-						aria-label="more"
-						id="long-button"
-						aria-controls={open ? 'long-menu' : undefined}
-						aria-expanded={open ? 'true' : undefined}
-						aria-haspopup="true"
-						onClick={handleClick}
-					>
-						<MoreVertIcon />
-					</IconButton>
-					<Menu
-						id="long-menu"
-						MenuListProps={{
-							'aria-labelledby': 'long-button',
-						}}
-						anchorEl={anchorEl}
-						open={open}
-						onClose={() => setAnchorEl(null)}
-						PaperProps={{
-							style: {
-								maxHeight: ITEM_HEIGHT * 4.5,
-								width: '20ch',
-							},
-						}}
-					>
-						<MenuItem onClick={handleDelete}>Delete</MenuItem>
-					</Menu>
-				</div>
+				{user === username && (
+					<div>
+						<IconButton
+							aria-label="more"
+							id="long-button"
+							aria-controls={open ? 'long-menu' : undefined}
+							aria-expanded={open ? 'true' : undefined}
+							aria-haspopup="true"
+							onClick={handleClick}
+						>
+							<MoreVertIcon />
+						</IconButton>
+						<Menu
+							id="long-menu"
+							MenuListProps={{
+								'aria-labelledby': 'long-button',
+							}}
+							anchorEl={anchorEl}
+							open={open}
+							onClose={() => setAnchorEl(null)}
+							PaperProps={{
+								style: {
+									maxHeight: ITEM_HEIGHT * 4.5,
+									width: '20ch',
+								},
+							}}
+						>
+							<MenuItem onClick={handleDelete}>Delete</MenuItem>
+						</Menu>
+					</div>
+				)}
 			</div>
 			<p style={{ fontSize: '1.4rem', marginTop: '1rem' }}>{tweet}</p>
 		</Wrapper>

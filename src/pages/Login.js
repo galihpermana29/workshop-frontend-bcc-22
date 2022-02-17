@@ -13,15 +13,12 @@ import { ErrorMessage } from './Signup';
 import { useAuth } from '../config/Auth';
 import { useNavigate } from 'react-router-dom';
 
-
 const Login = () => {
-
 	const { setAndGetTokens } = useAuth();
 	const [forms, setForms] = useState({ email: '', password: '' });
 	const [isError, setIsError] = useState({ status: false, message: '' });
 	const navigate = useNavigate();
 
-  
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		try {
@@ -31,7 +28,12 @@ const Login = () => {
 			//jika sukses
 			if (loginResponse.data.success) {
 				const token = loginResponse.data.data.token;
-				setAndGetTokens(token);
+
+				const currUser = await tweetAPI.get('/user', {
+					headers: { Authorization: `Bearer ${token}` },
+				});
+				const id = currUser.data.data.id;
+				setAndGetTokens(token, id);
 				navigate('/', { replace: true });
 				console.log(loginResponse, token, 'tokenton');
 			}
